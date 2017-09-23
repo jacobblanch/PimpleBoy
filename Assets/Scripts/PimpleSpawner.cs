@@ -8,11 +8,9 @@ public class PimpleSpawner : MonoBehaviour {
     public Transform[] pimpleSpawns;
     public GameObject pimple;
     int spawnPos;
-    GameObject spawnObjPos;
+    //GameObject spawnObjPos;
     float timer;
     public float spawnFreq = 1;
-    public int poppedScore;
-    public Text poppedText;
     public AudioSource spawnSound;
     public float spawnFreqDecay;
 
@@ -25,8 +23,6 @@ public class PimpleSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        poppedText.text = poppedScore.ToString();
-
         if (spawnFreq > 0.2)
             spawnFreq -= spawnFreqDecay * Time.deltaTime;
 
@@ -37,12 +33,21 @@ public class PimpleSpawner : MonoBehaviour {
         else
         {
             timer = 0;
-            if (!Physics.CheckSphere(pimpleSpawns[spawnPos].position, 0.1f))
-            {
-                Instantiate(pimple, pimpleSpawns[spawnPos].position, pimpleSpawns[spawnPos].rotation);
-                spawnSound.Play();
-            }
-                
+            SpawnPimple();
         }
 	}
+
+    public void SpawnPimple()
+    {
+        if (Physics.CheckSphere(pimpleSpawns[spawnPos].position, 0.1f))
+        {
+            if (spawnPos > 11)
+                spawnPos = 0;
+        } else
+        {
+            GameObject newPimple = (GameObject)Instantiate(pimple, pimpleSpawns[spawnPos].position, pimpleSpawns[spawnPos].rotation);
+            newPimple.name = "Pimple " + (spawnPos + 1);
+            spawnSound.Play();
+        }
+    }
 }
