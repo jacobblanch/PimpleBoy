@@ -39,7 +39,7 @@ public class PimpleSpawner : MonoBehaviour {
 
     public void SpawnPimple()
     {
-        if (Physics.CheckSphere(pimpleSpawns[spawnPos].position, 0.1f))
+        if (Physics.CheckSphere(pimpleSpawns[spawnPos].position, 0.1f))  
         {
             if (spawnPos > 11)
                 spawnPos = 0;

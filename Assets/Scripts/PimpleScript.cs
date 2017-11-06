@@ -29,7 +29,7 @@ public class PimpleScript : MonoBehaviour {
     public void takeDamage(float damage)
     {
         hp -= damage;
-        PlayAudio();
+        //PlayAudio();
         if (hp <= 0)
         {
             Instantiate(splat, transform.position, transform.rotation);
@@ -43,6 +43,9 @@ public class PimpleScript : MonoBehaviour {
         {
             audioSource.PlayOneShot(squeezeSound);
             audioPlayed = true;
+        } else if (!Input.GetButton("Fire1"))
+        {
+            audioPlayed = false;
         }
     }
 }
