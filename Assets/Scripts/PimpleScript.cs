@@ -12,6 +12,8 @@ public class PimpleScript : MonoBehaviour {
     AudioSource audioSource;
     public AudioClip squeezeSound;
     bool audioPlayed;
+    float audioTime;
+    float audioLimit = 0.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +26,10 @@ public class PimpleScript : MonoBehaviour {
             timer += Time.deltaTime;
         else
             SceneManager.LoadScene("EndMenu");
+        if (audioPlayed)
+            audioTime += Time.deltaTime;
+
+        Debug.Log(audioTime);
 	}
 
     public void takeDamage(float damage)
@@ -43,9 +49,10 @@ public class PimpleScript : MonoBehaviour {
         {
             audioSource.PlayOneShot(squeezeSound);
             audioPlayed = true;
-        } else if (!Input.GetButton("Fire1"))
+        } else if (audioTime > audioLimit )
         {
             audioPlayed = false;
+            audioTime = 0f;
         }
     }
 }

@@ -5,28 +5,31 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     
     public float damage;
-    AudioSource audioSource;
-
-    // Use this for initialization
-    void Start ()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    bool attackedPimple;
 	
 	// Update is called once per frame
 	void Update ()
     {
+        //Debug.Log(attackedPimple);
         if (Input.GetButton("Fire1"))
         {
             RaycastHit hit;
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                    PimpleScript pimpleScript = hit.transform.gameObject.GetComponent<PimpleScript>();
+                PimpleScript pimpleScript = hit.transform.gameObject.GetComponent<PimpleScript>();
 
-                    if (pimpleScript != null)
-                        pimpleScript.takeDamage(damage);
+                if (pimpleScript != null && !attackedPimple)
+                {
+                    pimpleScript.takeDamage(damage);
+                    if (pimpleScript.hp <= 0)
+                        attackedPimple = true;
+                }
+
+            }
+            if (attackedPimple){
+                if (Input.GetButtonDown("Fire1"))
+                    attackedPimple = false;
             }
         }
     }
