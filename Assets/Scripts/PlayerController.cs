@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             RaycastHit hit;
 
@@ -26,9 +26,7 @@ public class PlayerController : MonoBehaviour {
                     PimpleScript pimpleScript = hit.transform.gameObject.GetComponent<PimpleScript>();
 
                     if (pimpleScript != null)
-                {
-                    pimpleScript.takeDamage(damage);
-                }
+                        pimpleScript.takeDamage(damage);
             }
         }
     }
